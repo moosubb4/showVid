@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>test show video</title>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- <script type="javascript"
+            src="./service.js"></script>
+    <script type="javascript"
+            src="./ctrl/router.js"></script> -->
+
+    <script>
+        $().ready(function () {
+
+            const url = 'http://127.0.0.1:8080/';
+
+            async function getDiscovery() {
+                const path = url + 'discovery';
+                try {
+                    const response = await axios.get(path);
+                    const data = response.data;
+
+                    $.each(data, function (key, value) {
+                        // alert(index + ": " + value);
+                        console.log(key , ": " , value);
+                    });
+
+                    // console.log(data);
+                } catch (error) {
+                    alert('oops');
+                    console.error(error);
+                }
+            }
+
+            getDiscovery();
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
