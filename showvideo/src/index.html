@@ -34,7 +34,26 @@
                 const data = response.data.items;
 
                 $.each(data, function (key, value) {
-                    $('#app').append(`<p>${value.snippet.title}</p>`);
+
+                    const {
+                        etag,
+                        id,
+                        kind,
+                        snippet
+                    } = value;
+
+                    // const title = snippet.title;
+                    // const thumbnails = snippet.thumbnails["default"];
+
+                    $('#app').append(`
+                    <div class="item">
+                        <p>${snippet.title}</p>                    
+                        <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/${id.videoId}" 
+                        frameborder="0" allow="accelerometer; autoplay; 
+                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    `);
                 });
 
                 console.log(data);
@@ -56,6 +75,17 @@
 
     h1 {
         text-align: center;
+    }
+
+    #app {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #app>.item {
+        margin: 0 5px;
+        max-width: 560px;
     }
 
 </style>
