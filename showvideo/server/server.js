@@ -19,15 +19,18 @@ const instance = axios.create({
     }
 });
 
-const getVideoList = () => {
-    return instance.get('')
-        .then(function (response) {
-            return JSON.stringify(response.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-};
+const getVideoList = async () => {
+    try {
+        const response = await instance.get();
+        const data = JSON.stringify(response.data);
+        // console.log(data);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 
 app.use(function (req, res, next) {
     res.header("Content-Type", "application/json");
@@ -38,7 +41,14 @@ app.use(function (req, res, next) {
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/discovery', (req, res) => res.send(getVideoList()));
+app.get('/discovery', async (req, res) => {
+    try {
+        const data = await getVideoList();
+        res.json(data);
+    } catch (e) {
+        next(e)
+    }
+});
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
