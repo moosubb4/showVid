@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>test show video</title>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- <script type="javascript"
+            src="./service.js"></script>
+    <script type="javascript"
+            src="./ctrl/router.js"></script> -->
+
+    <script>
+        $().ready(function () {
+
+            const instance = axios.create({
+                baseURL: 'http://127.0.0.1:8080/',
+                headers: {
+                    'content-type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+                }
+            })
+
+            async function getDiscovery() {
+                try {
+                    const response = await instance.get('discovery');
+                    const data = response.data;
+
+                    // $.each(data, function (key, value) {
+                    //     // alert(index + ": " + value);
+                    //     console.log(key , ": " , value);
+                    // });
+
+                    console.log(data);
+                } catch (error) {
+                    alert('oops');
+                    console.error(error);
+                }
+            }
+
+            // async function getDiscovery() {
+            //     try {
+            //         const response = await instance.get('discovery');
+            //         const data = response.data;
+            //         console.log(data);
+            //     } catch (error) {
+            //         alert('oops');
+            //         console.error(error);
+            //     }
+            // }
+
+            getDiscovery();
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
