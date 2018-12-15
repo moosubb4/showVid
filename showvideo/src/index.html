@@ -71,7 +71,7 @@
                             <img src="${thumbnails.url}" class="${h ? '' : 'circle'}" style="height:${h ? h : sizeImg.default.width}px;width:${w ? w : sizeImg.default.width}px;"></img>
                         </div>   
 
-                        <div class="itemVideo" style="height:315px;width:560px;">
+                        <div class="itemVideo" style="height:${h ? h : sizeImg.medium.height}px;width:${w ? w : sizeImg.medium.width}px;">
                           <div class="videoWrapper">                                             
                             <iframe width="560" height="315" 
                              src="https://www.youtube.com/embed/${id.videoId}" 
@@ -81,11 +81,11 @@
                         </div>   
 
                         <div class="thumbnails-text">
-                            <p>${snippet.title}</p>
-                            <a href="https://www.youtube.com/channel/${snippet.channelId}">
+                            <p class="title">${snippet.title}</p>
+                            <a class="chtitle" href="https://www.youtube.com/channel/${snippet.channelId}">
                                 ${snippet.channelTitle}
                             </a>
-                             <p>${snippet.description}</p>
+                            <p class="describe">${snippet.description}</p>
                         </div>
                       </div>
 
@@ -133,8 +133,10 @@
 
     #app>.item {
         margin: 10px;
-        background-color: lightgray;
+        /* background-color: lightgray; */
         width: 48%;
+        background-color: #333;
+        color: whitesmoke;
         display: inline-block;
         /* width: 560px; */
     }
@@ -154,7 +156,7 @@
         max-width: 480;
         max-height: 360;
 
-        background-color: aquamarine;
+        /* background-color: aquamarine; */
     }
 
     .thumbnails>.thumbnails-img>img {
@@ -169,7 +171,21 @@
 
     .thumbnails>.thumbnails-text {
         max-width: 500px;
-        background-color: rgb(24, 190, 135);
+        /* background-color: rgb(24, 190, 135); */
+    }
+
+    .thumbnails-text>.title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .thumbnails-text>.chtitle {
+        color: white;
+        text-decoration: none;
+    }
+
+    .thumbnails-text>.describe {
+        font-size: 12px;
     }
 
     .itemVideo {}
