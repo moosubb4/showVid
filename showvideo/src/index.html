@@ -18,10 +18,10 @@
 <script type="text/javascript"
         src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!-- <script src="./service.js"></script> -->
 <!-- <script type="javascript"
-            src="./service.js"></script>
-    <script type="javascript"
             src="./ctrl/router.js"></script> -->
+<!-- <script type="javascript"></script> -->
 
 <script>
     $().ready(function () {
@@ -33,8 +33,24 @@
                 const response = await axios.get(url + 'discovery');
                 const data = response.data.items;
 
-                $.each(data, function (key, value) {
+                const sizeImg = {
+                    default: {
+                        "width": 120,
+                        "height": 90
+                    },
+                    medium: {
+                        "width": 320,
+                        "height": 180
+                    },
+                    high: {
+                        "width": 480,
+                        "height": 360
+                    }
+                };
 
+                const thumbnailSize = "medium";
+
+                $.each(data, function (key, value) {
                     const {
                         etag,
                         id,
@@ -43,17 +59,44 @@
                     } = value;
 
                     // const title = snippet.title;
-                    // const thumbnails = snippet.thumbnails["default"];
+                    const thumbnails = snippet.thumbnails[thumbnailSize];
+                    const h = thumbnails.height;
+                    const w = thumbnails.width;
 
                     $('#app').append(`
-                    <div class="item">
-                        <p>${snippet.title}</p>                    
-                        <iframe width="560" height="315" 
-                        src="https://www.youtube.com/embed/${id.videoId}" 
-                        frameborder="0" allow="accelerometer; autoplay; 
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="item">     
+
+                      <div class="thumbnails">
+                        <div class="thumbnails-img" style="height:${h ? h : sizeImg.medium.height}px;width:${w ? w : sizeImg.medium.width}px;">
+                            <img src="${thumbnails.url}" class="${h ? '' : 'circle'}" style="height:${h ? h : sizeImg.default.width}px;width:${w ? w : sizeImg.default.width}px;"></img>
+                        </div>   
+
+                        <div class="itemVideo" style="height:315px;width:560px;">
+                          <div class="videoWrapper">                                             
+                            <iframe width="560" height="315" 
+                             src="https://www.youtube.com/embed/${id.videoId}" 
+                            frameborder="0" allow="accelerometer; autoplay; 
+                            encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                          </div>
+                        </div>   
+
+                        <div class="thumbnails-text">
+                            <p>${snippet.title}</p>
+                            <a href="https://www.youtube.com/channel/${snippet.channelId}">
+                                ${snippet.channelTitle}
+                            </a>
+                             <p>${snippet.description}</p>
+                        </div>
+                      </div>
+
                     </div>
                     `);
+
+                    $(".itemVideo").hide();
+                    $("div.thumbnails-img").click(function () {
+                        $(this).hide();
+                        $(this).next().show();
+                    });
                 });
 
                 console.log(data);
@@ -64,6 +107,8 @@
         }
 
         getDiscovery();
+
+
 
     });
 </script>
@@ -78,14 +123,71 @@
     }
 
     #app {
-        display: flex;
+        /* display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0 70px;
+        margin: 0 auto; */
     }
 
     #app>.item {
+        margin: 10px;
+        background-color: lightgray;
+        width: 48%;
+        display: inline-block;
+        /* width: 560px; */
+    }
+
+    .thumbnails {}
+
+    .thumbnails>div {
         margin: 0 5px;
-        max-width: 560px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .thumbnails>.thumbnails-img {
+        min-width: 120;
+        min-height: 90;
+
+        max-width: 480;
+        max-height: 360;
+
+        background-color: aquamarine;
+    }
+
+    .thumbnails>.thumbnails-img>img {
+        margin: 0 auto;
+        display: block;
+    }
+
+    .thumbnails>.thumbnails-img>img.circle {
+        border-radius: 50%;
+        padding: 20px;
+    }
+
+    .thumbnails>.thumbnails-text {
+        max-width: 500px;
+        background-color: rgb(24, 190, 135);
+    }
+
+    .itemVideo {}
+
+    .videoWrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 */
+        /* padding-top: 25px; */
+        height: 0;
+    }
+
+    .videoWrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
 </style>
