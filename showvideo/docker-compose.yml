@@ -1,0 +1,21 @@
+version: '3.3'
+ 
+services:
+  web-app:
+    build: .
+    image: docker-video:dev
+    container_name: web-app
+    command: npm run start
+    ports:
+      - 3000:3000
+    # volumes:
+    #   - ./showvideo:/showvideo
+  server-app:
+    build: .
+    image: docker-video:dev
+    container_name: server-app
+    command: npm run server
+    ports:
+      - 8000:8080
+    # volumes:
+    #   - ./showvideo:/showvideo
