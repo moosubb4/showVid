@@ -1,4 +1,4 @@
-const vid = require('./db/vid.json');
+// const vid = require('./db/vid.json');
 const axios = require('axios');
 const express = require('express');
 const https = require('https');
@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express()
 const port = 8080
-const hostname = '127.0.0.1';
+const hostname = '0.0.0.0';
 
 const vidListData = '';
 

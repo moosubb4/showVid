@@ -1,6 +1,6 @@
-function kuy() {
-    alert('YOLO');
-}
+// function kuy() {
+//     alert('YOLO');
+// }
 // const url = 'http://127.0.0.1:8080/';
 
 // async function getDiscovery() {
