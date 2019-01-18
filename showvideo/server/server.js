@@ -5,7 +5,8 @@ const https = require('https');
 const bodyParser = require('body-parser');
 
 const app = express()
-const port = 8080
+const port = process.env.PORT || 5000;
+
 const hostname = '0.0.0.0';
 
 const vidListData = '';
